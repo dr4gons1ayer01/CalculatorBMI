@@ -8,11 +8,11 @@
 import UIKit
 
 class ResultView: UIView {
-    let resultLabel = UILabel()
-    let scoreLabel = UILabel()
-    let recommendationLabel = UILabel()
+    let resultLabel = UILabel(text: "ТВОЙ РЕЗУЛЬТАТ")
+    let scoreLabel = UILabel(text: "19.5")
+    let recommendationLabel = UILabel(text: "ешь больше мяса!")
     let recalculateButton = UIButton(title: "пересчитать", bg: UIColor(white: 1, alpha: 0.8))
-    let backColor = UIImageView(image: UIImage(named: "resultBottom")!)
+    let bottomColor = UIImageView(image: UIImage(named: "resultBottom")!)
     
     init() {
         super.init(frame: CGRect())
@@ -22,33 +22,31 @@ class ResultView: UIView {
         backgroundColor = UIColor(named: "resultBg")
         
         recalculateButton.setTitleColor(UIColor(named: "buttonColor"), for: .normal)
-        backColor.contentMode = .scaleAspectFill
-        
-        resultLabel.text = "ТВОЙ РЕЗУЛЬТАТ"
+
         resultLabel.font = UIFont(name: "Gilroy-Bold", size: 36)
         resultLabel.textColor = .white
         
-        scoreLabel.text = "19.5"
         scoreLabel.font = UIFont(name: "Gilroy-Bold", size: 62)
         scoreLabel.textColor = .white
         
-        recommendationLabel.text = "ешь больше мяса!"
         recommendationLabel.font = UIFont(name: "Gilroy-Regular", size: 24)
         recommendationLabel.textColor = .white
         
-        let stack = UIStackView(arrangedSubviews: [resultLabel, scoreLabel, recommendationLabel])
+        let stack = UIStackView(arrangedSubviews: [resultLabel, 
+                                                   scoreLabel,
+                                                   recommendationLabel])
         stack.axis = .vertical
         stack.alignment = .center
         stack.spacing = 10
 
         addSubview(stack)
         addSubview(recalculateButton)
-        addSubview(backColor)
+        addSubview(bottomColor)
         bringSubviewToFront(recalculateButton)
 
         stack.translatesAutoresizingMaskIntoConstraints = false
         recalculateButton.translatesAutoresizingMaskIntoConstraints = false
-        backColor.translatesAutoresizingMaskIntoConstraints = false
+        bottomColor.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             stack.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -50),
@@ -58,8 +56,8 @@ class ResultView: UIView {
             recalculateButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -20),
             recalculateButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -20),
             
-            backColor.centerXAnchor.constraint(equalTo: centerXAnchor, constant: 10),
-            backColor.bottomAnchor.constraint(equalTo: bottomAnchor),
+            bottomColor.centerXAnchor.constraint(equalTo: centerXAnchor, constant: 10),
+            bottomColor.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
     }
     

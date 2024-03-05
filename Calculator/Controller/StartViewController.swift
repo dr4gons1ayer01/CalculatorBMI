@@ -9,32 +9,29 @@ import UIKit
 
 class StartViewController: UIViewController {
     let mainView = StartView()
-
+    var calculatorBrain = CalculatorBrain()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view = mainView
-        updateUI()
-        
-    }
-    func updateUI() {
         calculate()
-        
     }
     
     func calculate() {
         let tap = UIAction { _ in
-//            let vc = ResultViewController()
-//            self.navigationController?.pushViewController(vc, animated: true)
             
-            let height = self.mainView.heightSlider.value
             let weight = self.mainView.weightSlider.value
-            let bmi = weight / (height * height)
-            print(bmi)
+            let height = self.mainView.heightSlider.value
             
-
+            self.calculatorBrain.calculateBMI(height: height, weight: weight)
+            
+            let vc = ResultViewControler()
+            vc.bmiValue = self.calculatorBrain.bmi
+            self.navigationController?.pushViewController(vc, animated: true)
         }
         mainView.calculateButton.addAction(tap, for: .touchUpInside)
     }
+
 }
 
 

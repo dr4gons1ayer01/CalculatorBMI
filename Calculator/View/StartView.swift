@@ -9,14 +9,14 @@ import UIKit
 
 class StartView: UIView {
     let backgroundImage = UIImageView(image: UIImage(named: "bg")!)
-    let calculateLabel = UILabel()
+    let calculateLabel = UILabel(text: "РАССЧЕТ ИНДЕКСА \nМАССЫ ТЕЛА")
     
-    let heightInfoLabel = UILabel()
-    let heightLabel = UILabel()
+    let heightInfoLabel = UILabel(text: "Рост")
+    let heightLabel = UILabel(text: "1.5 м")
     let heightSlider = UISlider()
     
-    let weightInfoLabel = UILabel()
-    let weightLabel = UILabel()
+    let weightInfoLabel = UILabel(text: "Вес")
+    let weightLabel = UILabel(text: "100 кг")
     let weightSlider = UISlider()
     let calculateButton = UIButton(title: "посчитать", bg: UIColor(named: "buttonColor")!)
     
@@ -26,44 +26,40 @@ class StartView: UIView {
         setupUI()
     }
     func setupUI() {
-        backgroundImage.contentMode = .scaleAspectFill
-        calculateLabel.text = "РАССЧЕТ ИНДЕКСА \nМАССЫ ТЕЛА"
-        
-        calculateLabel.numberOfLines = 3
+        calculateLabel.numberOfLines = 0
         calculateLabel.font = UIFont(name: "Gilroy-Bold", size: 40)
-        calculateLabel.textColor = .black
-        
-        heightInfoLabel.text = "Рост"
-        heightLabel.text = "1.5 м"
-        
-        weightInfoLabel.text = "Вес"
-        weightLabel.text = "100 кг"
-        
+
         heightSlider.tintColor = UIColor(named: "buttonColor")
         weightSlider.tintColor = UIColor(named: "buttonColor")
         
-        heightSlider.minimumValue = 0.5
-        heightSlider.maximumValue = 2.5
+        heightSlider.minimumValue = 1.1
+        heightSlider.maximumValue = 2.1
         
         weightSlider.minimumValue = 30.0
-        weightSlider.maximumValue = 200.0
+        weightSlider.maximumValue = 120.0
+        
+        heightLabel.text = "\(heightSlider.minimumValue) м"
+        weightLabel.text = "\(weightSlider.minimumValue) кг"
         
         heightSlider.addTarget(self, action: #selector(heightSliderValueChanged(_:)), for: .valueChanged)
         weightSlider.addTarget(self, action: #selector(weightSliderValueChanged(_:)), for: .valueChanged)
-        heightSlider.value = (heightSlider.maximumValue - heightSlider.minimumValue) / 1.6
-        weightSlider.value = (weightSlider.maximumValue - weightSlider.minimumValue) / 1.4
 
-    
-        let heightStack = UIStackView(arrangedSubviews: [heightInfoLabel,heightLabel])
+        let heightStack = UIStackView(arrangedSubviews: [heightInfoLabel,
+                                                         heightLabel])
         heightStack.axis = .horizontal
         heightStack.spacing = 100
         
-        let weightStack = UIStackView(arrangedSubviews: [weightInfoLabel,weightLabel])
+        let weightStack = UIStackView(arrangedSubviews: [weightInfoLabel,
+                                                         weightLabel])
         weightStack.axis = .horizontal
         weightStack.spacing = 100
         weightLabel.textAlignment = .right
 
-        let stack = UIStackView(arrangedSubviews: [heightStack, heightSlider, weightStack, weightSlider, calculateButton])
+        let stack = UIStackView(arrangedSubviews: [heightStack,
+                                                   heightSlider,
+                                                   weightStack,
+                                                   weightSlider,
+                                                   calculateButton])
         stack.axis = .vertical
         stack.spacing = 20
         
@@ -92,16 +88,20 @@ class StartView: UIView {
     @objc func heightSliderValueChanged(_ sender: UISlider) {
         let height = String(format: "%.2f", sender.value)
         heightLabel.text = "\(height) м"
-//        print("Новое значение: \(String(format: "%.2f м", sender.value))")
     }
     @objc func weightSliderValueChanged(_ sender: UISlider) {
         let weight = String(format: "%.1f", sender.value)
         weightLabel.text = "\(weight) кг"
-//        print("Новое значение: \(String(format: "%.2f м", sender.value))")
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+extension UILabel {
+    convenience init(text: String) {
+        self.init()
+        self.text = text
     }
 }
 extension UIButton {
